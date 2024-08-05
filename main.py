@@ -17,8 +17,8 @@ helloText = """КАК ИСПОЛЬЗОВАТЬ ВОПРОСЫ:
 6. Заранее договоритесь со всеми участниками игры о том, что то, что вы рассказываете друг другу отвечая на вопросы останется только между вами.
 Подчеркивайте что ваши разговоры строго конфиденциальны. Тогда все участники будут чувствовать себя более расслабленно."""
 
-howPlay = "✨Как играть?"
-getQuestion = "👋 Получить вопрос"
+howPlay = '✨Как играть?'
+getQuestion = '👋 Получить вопрос'
 
 
 WEBHOOK_HOST = os.environ.get('WEBHOOK_HOST')
@@ -86,30 +86,27 @@ def send_welcome(message):
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
-def get_questons(message):
+def get_questions(message):
     """
     Handle all other messages
     """
     # bot.reply_to(message, message.text)
     if message.text == getQuestion:
-
-	    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
-	    btn1 = types.KeyboardButton(howPlay)
+        keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
+        btn1 = types.KeyboardButton(howPlay)
         btn2 = types.KeyboardButton(getQuestion)
 
-	    index = random.randint(0, maxLength-1)
+        index = random.randint(0, maxLength-1)
 
-	    keyboard.add(btn1, btn2)
-	    bot.send_message(message.from_user.id, questions[index], reply_markup=keyboard) #ответ бота
-	elif message.text == howPlay:
-		keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
-	    btn1 = types.KeyboardButton(howPlay)
+        keyboard.add(btn1, btn2)
+        bot.send_message(message.from_user.id, questions[index], reply_markup=keyboard) #ответ бота
+    elif message.text == howPlay:
+        keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
+        btn1 = types.KeyboardButton(howPlay)
         btn2 = types.KeyboardButton(getQuestion)
 
-	    keyboard.add(btn1, btn2)
-	    bot.send_message(message.from_user.id, helloText, reply_markup=keyboard) #ответ бота
-
-
+        keyboard.add(btn1, btn2)
+        bot.send_message(message.from_user.id, helloText, reply_markup=keyboard) #ответ бота
 
 # Remove webhook, it fails sometimes the set if there is a previous webhook
 bot.remove_webhook()
